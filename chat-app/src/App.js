@@ -9,7 +9,7 @@ import OpenAI from 'openai';
 const openai = new OpenAI({
   apiKey: '0000',
   dangerouslyAllowBrowser: true,
-  baseURL: "https://gitclone.com/qchain/v1"
+  baseURL: "https://u401435-9b28-df6d5176.westb.seetacloud.com:8443/v1"
 });
 var message_history = [];
 

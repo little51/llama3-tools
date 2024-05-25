@@ -8,7 +8,7 @@ GPU：16G以上，建议24G
 
 操作系统：建议Ubuntu22.04
 
-CUDA：12.2及以上
+CUDA：12.0及以上
 
 Anaconda：最新版
 
@@ -17,16 +17,19 @@ Anaconda：最新版
 ### 1、安装依赖环境
 
 ```bash
-# 1、创建虚拟环境
+# 1、clone代码
+git clone https://github.com/little51/llama3-tools
+cd llama3-tools/
+# 2、创建虚拟环境
 conda create -n llama3 python=3.10 -y
 conda activate llama3
-# 2、安装依赖库
+# 3、安装依赖库
 pip install -r requirements.txt -i https://pypi.mirrors.ustc.edu.cn/simple
-# 3、验证PyTorch
+# 4、验证PyTorch
 python -c "import torch; print(torch.cuda.is_available())"
 ```
 
-### 2、PyTorch修正
+### 2、PyTorch修正（如有问题）
 
 ```bash
 # 如果验证PyTorch返回False或报错，则按以下步骤重装PyTorch
@@ -58,21 +61,9 @@ python model_download.py --repo_id NousResearch/Meta-Llama-3-8B-Instruct
 
 ```bash
 python llama3-gradio.py
+# 访问http://服务器IP:6006/
 ```
-
-## 三、模型微调
-
-```bash
-# 微调
-python llama3-train.py
-# 模型合并
-python merge_lora_weights.py \
---base_model ./dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct \
---peft_model output/PEFT/model \
---output_dir output/merged/model
-```
-
-## 四、Openai API开发
+## 三、Openai API开发
 
 ### 1、运行API服务程序
 
@@ -83,9 +74,24 @@ python llama3-api.py
 ### 2、运行客户端程序
 
 ```bash
+# 需要先安装node.js
 cd chat-app
 npm i
+# 修改src/app.js第12行的baseURL为：http://服务器IP:6006/v1
 npm start
+# 访问http://127.0.0.1:3000/
+```
+## 四、模型微调
+
+```bash
+# 微调
+python llama3-train.py
+# 模型合并
+python merge_lora_weights.py \
+--base_model ./dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct \
+--peft_model output/PEFT/model \
+--output_dir output/merged/model
+# 合并后，就可以把output/merged/model下的模型装载推理了
 ```
 
 ## 五、使用llama-recipes微调
@@ -126,7 +132,7 @@ python -m llama_recipes.finetuning \
 --dataset alpaca_dataset \
 --peft_method lora \
 --batch_size_training 1 \
---model_name ./dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct \
+--model_name ../dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct \
 --output_dir output/PEFT/model \
 --quantization
 ```
@@ -135,7 +141,7 @@ python -m llama_recipes.finetuning \
 
 ```bash
 python merge_lora_weights.py \
---base_model ./dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct \
+--base_model ../dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct \
 --peft_model output/PEFT/model \
 --output_dir output/merged/model
 ```
