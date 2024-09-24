@@ -58,7 +58,7 @@ def prepareTrainer(model, tokenizer, dataset):
         warmup_steps=5,
         learning_rate=2e-4,
         fp16=False,
-        bf16=True,
+        bf16=False,
         logging_steps=1,
         max_grad_norm=0.5,
         weight_decay=0.01,

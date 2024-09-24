@@ -5,7 +5,9 @@ import fire
 import torch
 from peft import PeftModel
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import os
 
+int8 = (os.environ.get('INT8','false') == 'true')
 
 def main(base_model: str,
          peft_model: str,
@@ -13,7 +15,7 @@ def main(base_model: str,
         
     model = AutoModelForCausalLM.from_pretrained(
         base_model,
-        load_in_8bit=False,
+        load_in_8bit=int8,
         torch_dtype=torch.float16,
         device_map="auto",
         offload_folder="tmp", 
