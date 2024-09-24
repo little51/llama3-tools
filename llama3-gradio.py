@@ -1,15 +1,26 @@
 import gradio as gr
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
+from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer,BitsAndBytesConfig
 from threading import Thread
+import os
 
 device = "cuda" if torch.cuda.is_available() else "auto"
-model_path = './dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct'
+
+model_path = os.environ.get('MODEL_PATH', './dataroot/models/NousResearch/Meta-Llama-3.1-8B-Instruct')
+int8 = os.environ.get('INT8','false')
 tokenizer = AutoTokenizer.from_pretrained(model_path)
-model = AutoModelForCausalLM.from_pretrained(
-    model_path,
-    device_map=device,
-    torch_dtype=torch.float16).eval()
+if int8 == 'true' :
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path,
+        device_map=device,
+        torch_dtype=torch.float16,
+        quantization_config=BitsAndBytesConfig(load_in_8bit=True),
+        low_cpu_mem_usage=True).eval()
+else :
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path,
+        device_map=device,
+        torch_dtype=torch.float16).eval()
 
 terminators = [
     128001, 128009

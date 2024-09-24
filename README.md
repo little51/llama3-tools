@@ -54,7 +54,7 @@ python -c "import torch; print(torch.cuda.is_available())"
 # 链接为 https://aliendao.cn/model_download.py
 # linux下使用wget命令下载，windows下直接在浏览器打开链接下载
 wget https://aliendao.cn/model_download.py
-python model_download.py --repo_id NousResearch/Meta-Llama-3-8B-Instruct
+python model_download.py --repo_id NousResearch/Meta-Llama-3.1-8B-Instruct
 ```
 
 ### 4、运行WEB测试程序
@@ -88,7 +88,7 @@ npm start
 python llama3-train.py
 # 模型合并
 python merge_lora_weights.py \
---base_model ./dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct \
+--base_model ./dataroot/models/NousResearch/Meta-Llama-3.1-8B-Instruct \
 --peft_model output/PEFT/model \
 --output_dir output/merged/model
 # 合并后，就可以把output/merged/model下的模型装载推理了

@@ -98,7 +98,7 @@ if __name__ == "__main__":
     parser.add_argument('--load_in_8bit', default=False,
                         action='store_true', required=False)
     parser.add_argument('--model_path',
-                        default="./dataroot/models/NousResearch/Meta-Llama-3-8B-Instruct",
+                        default="./dataroot/models/NousResearch/Meta-Llama-3.1-8B-Instruct",
                         type=str, required=False)
     parser.add_argument('--data_file',
                         default="alpaca_data.json",
