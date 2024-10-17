@@ -2,6 +2,16 @@
 
 本工具集包括了LLama3模型的安装、Web应用、微调程序、Openai API开发与客户端应用以及使用Meta官方微调程序进行微调的步骤。
 
+## 作者新书：
+
+### 《大模型项目实战：多领域智能应用》
+
+[开发配套资源：https://github.com/little51/llm-dev](https://github.com/little51/llm-dev)
+
+[图书官方直营：https://item.jd.com/14810472.html](https://item.jd.com/14810472.html)
+
+![图书](https://gitclone.com/download1/llm-dev/llm-dev.png)
+
 ## 一、准备工作
 
 GPU：16G以上，建议24G
